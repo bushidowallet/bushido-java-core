@@ -1,0 +1,50 @@
+[
+  {
+    "passphrase": "crazy horse battery staple",
+    "hash": "b71727e6b881b3c3eb002cfb8c68d9bf71e4e02b07bff3fda5e0cb2cc0221d26",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "ive blotched cream or white eggs is laid in a robust cup-shaped nest built near the ground and concealed by dense vegetation",
+    "hash": "85e14868018cb94f0436d7dc58fad98ef40c66da923b3b63933247195a8747fb",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "Featured content represents the best that Wikipedia can offer. These include the articles, pictures, and other contributions that showcase the polished",
+    "hash": "18c7ccde3c8ad4ecd16b0ce75fea292dbee6957f23fca9b7ae8957714557cdf4",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "Had Kock outmanoeuvred the enemy and penetrated their flank, it at least would be expected of a military man of the time",
+    "hash": "ee106ae199b576967479b3f4e798fd3e38a12c25547a46a8b781582d7ba80e51",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "hacker is a movie I 495933 want to see as - $ ap.",
+    "hash": "63d6bab3dfb800b37ad73684428ab708b36c641bbb5d2ac6059baf47d42ca137",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "this is a sample %$$##2#0 595933 passphrase that has to be hashed many thousands times",
+    "hash": "455421482c8d89cd8dfd71157af8ad8b80e4e3b4dda8b14841a692bd3420221f",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "bom striki bom this is a pass to be hash hash gold",
+    "hash": "ac1e2861a2f389b2229c1f37962e6a71ade1905189fc787a897e693e77f20f25",
+    "rounds": "50000",
+    "func": "SHA-256"
+  },
+  {
+    "passphrase": "crazy horse battery staple",
+    "hash": "86a76f2fa2a09179b7997052bea2a5bd97bfc0d847af3544660317a857ea20cb",
+    "rounds": "1",
+    "func": "HmacSHA256"
+  }
+]

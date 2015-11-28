@@ -1,0 +1,22 @@
+[
+  {
+    "wif": "L4g5YgNYNWJB25hkYjUp3gcV17MJwxykU44nx88CDDyx1ZwiQPD3",
+    "message": "this is an example message",
+    "signature": "3045022100820984242ad717b5341cbb0fa7694cadbe1fc1695207381a7274651f66db8893022075b50a26f2578ce6c404f1555ddc0c82337298f988b07013a81bcc02f43a973d"
+  },
+  {
+    "wif": "L25GKWsRwNKnEs4BahFJBKTniA3gxbbLPXk4GqLE27pvTyHQWoyw",
+    "message": "this is an example message",
+    "signature": "3044022040ecb8fb99fafffc3b69251bd2ae5f2f2de6d413707072735715e34e1dbbd0250220522034e4915e5d16f71fa1d70b5d3ff4355cd040b45849778bef5253c5f88a49"
+  },
+  {
+    "wif": "5J1MfyD5yxr9uLPpxsBoFts9m8K91C4kgVLgNv1L25etPfHiGaW",
+    "message": "Satoshi Nakamoto is the creator of the swift replacement system",
+    "signature": "3045022100d1a3328e5501f0ca85d83da976a4f96505c0a1700137f5b3d3231da422dbd5fb022062217b19384be2feb1c304347ce0bcd2b2285a774161a63d0380f36135a039ac"
+  },
+  {
+    "wif": "L3wadShuDYpTR1sHVsbPSE695YX1Fh5wfDvE4ztZtyyYjidSUJmX",
+    "message": "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks",
+    "signature": "30450220290a41120f7d06d86d4d6914ea718d91111e58700b28072a951e59a2a8b1f983022100dee6880df00d72bc847929219a85d4edad83bd2ac45907371af920f3cac20bd7"
+  }
+]

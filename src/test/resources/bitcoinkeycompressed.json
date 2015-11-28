@@ -1,0 +1,94 @@
+[
+  {
+    "passphrase": "crazy horse battery staple",
+    "rounds": "50000",
+    "func": "SHA-256",
+    "hash": "b71727e6b881b3c3eb002cfb8c68d9bf71e4e02b07bff3fda5e0cb2cc0221d26",
+    "keyhash": "243d9080ee35193511ebc1fab00acdfbeb135d0901bbaa0b5b7c66d3df7ea752d354d8b75cdc7b03d3af916cf3e18f00aaca455526322bf1e0352d12de7e7155",
+    "chainCode": "d354d8b75cdc7b03d3af916cf3e18f00aaca455526322bf1e0352d12de7e7155",
+    "public": "xpub661MyMwAqRbcGeU4wEhPkAW7BL8Z5PL7X3AUxLq2mrYDMBdhLG16AxQx4GdjsfF8gzz2xCZRh8Bm1QSMCAUKeCGt5Tehb1acfRtnYY2XEw7",
+    "private": "xprv9s21ZrQH143K4APbqDAPP2ZNdJJ4fvcG9pEt9xRRDX1EUPJYnigqdA6UD1Y1pT3TuD1M19QjDgMgZSaqG46sAnMkaeUkcdNTPAmho29hBvu",
+    "derived": [
+      {
+        "path": "m/0",
+        "public": "xpub68GHhbqGdkJSJ4Ly8C1furjPtHAdDUzAzaVQzVJavjLt2DvvKYqt9UdcNrmk6JKU8h1rK2nWAV6yqPV6Hpvuf33dezACzKmFEbK3fWN4Za6",
+        "publicHex": "03ed5bd51e810378d10013f1d95ad7bbd98d61449e768c02c319c999c258e9e535",
+        "private": "xprv9uGwJ6JNoNk95aGW2AUfYinfLFL8p2GKdMZpC6tyNPou9Rbmn1XdbgK8XZgf44sECrD4vBDKPArGRrTeAWj9ThZWVb4qtFCMZEp4qF8tNfE",
+        "address": "1ENQmzee9AGMPeL2nwJTFtQ5Zdnp1KQEJQ",
+        "wif": "L4g5YgNYNWJB25hkYjUp3gcV17MJwxykU44nx88CDDyx1ZwiQPD3"
+      },
+      {
+        "path": "m/1",
+        "public": "xpub68GHhbqGdkJSLYmsnJ45soi2DUVkZjGikELXPS9haZFtcFscY67oeH6a2z7DgWbdq1qbJaK51SLDWkUa8Qsht4BSLhQzqe2YEisQabgja59",
+        "publicHex": "020cb8b0a0b5e99640d502f9db76f888a46fdda112a1e272842452e58d4227d78b",
+        "private": "xprv9uGwJ6JNoNk984hQgGX5WfmHfSfGAGYsP1Qvb3k62DiujTYTzYoZ6Un6Bk2oStaUx1WdrHTD271xu15kB6dMmfaXwK3syHae92zm1ypMNJu",
+        "address": "1GRgGGZuErvGiPnmFbFubDDS7SKWz6xrNu",
+        "wif": "L1rjeUY9ffkApft853udougq6y5eT3xbyoNPcMnkpzhZUQrui9cn"
+      },
+      {
+        "path": "m/2",
+        "public": "xpub68GHhbqGdkJSPEFV38WsqvbsjMsZnhxtAZN62mBrMMY8z46ZRScDpfRAFVeroHNFsFjDcxVDg1QWnEUVQpvpa7tDLtPJb4x2uwHSJeoZzMQ",
+        "publicHex": "0345e85fbafc60f8d0d28e72c7ff11ece52ad52fdaf6c168049a4e92e340ea9a8a",
+        "private": "xprv9uGwJ6JNoNk9AkB1w6ysUnf9BL35PFF2oLSVENnEo21A7FmQsuHyGs6gQE4M5LAMY42DNvne4gAwCFJkDMjheWJov2xrnjPsYvBLJWUht9B",
+        "address": "1NVZnyeFUWSX34xedxNbkfWtNwQtNa2sFD",
+        "wif": "L5ehRfojNaMf84nf5sAgvG8BwYLLEWrpJEBUuo6EnErnazqv8Gwk"
+      },
+      {
+        "path": "m/1098778",
+        "public": "xpub68GHhbqGdzevrk1tp6iue1kXNHKqWnqevMYjBH9d3kmqfDgPyLVsMySVsbDZfF9Uq8wmb5uzBW2wAbTpTEjLWbCnvWeyMFkaMNqe9Z8j43v",
+        "publicHex": "0303f200c1f3ac215e453e68f61931c0c5fe574ce7a27cf569074255bc72834bd6",
+        "private": "xprv9uGwJ6JNod6deFwRi5BuGsonpFVM7L7oZ8d8Ntk1VRErnRMFRoBcpB822K2SXX5nYQbFSG2AWkw8LfZKYxcgnuYmCfhmqkBk2dDX5tVzjYT",
+        "address": "1H6WmxpDEPX7L96FCPZzm1KPaVwZbzXrav",
+        "wif": "KzoiF4CTLBmYBKmaMoGQmsRyZnCtrpAL9VngucBULASKjsz2K5QZ"
+      },
+      {
+        "path": "m/66",
+        "public": "xpub68GHhbqGdkJVD3MDWK5nnU9SovPRhR57VNLP1K16eGomKFwVQQFJcmoyLasgyQ7H6e6HhNCrHcUCEAaQFcZEzxGn4YUufKmPakGWm9PFzi5",
+        "publicHex": "03a91d6f56f7e23a4cf35587291393ef840e5f61e63b491d20eebe85fe0f4d1a6a",
+        "private": "xprv9uGwJ6JNoNkBzZGkQHYnRLCiFtYwHxMG89QnCvbV5wGnSTcLrrw44yVVVGn58D7r494BY2bqhGQS8cemTXYxxR7iRXXNki2yXwK69LyDZ3D",
+        "address": "1M4vhpGNDBVq1AAoUQA2gR6zobDXHwe638",
+        "wif": "Kww5TZTU75PgJw8hzNuvrwG9wSPynXNKEjyujhxXwAovv6Xonjp8"
+      },
+      {
+        "path": "m/49609",
+        "public": "xpub68GHhbqGdkx2Jej7nRS5GmELX7LpHvUcEguezhAwqm5YdV6UDrGJcpNZ2N9WiDYnoynK3MfRS4F2NyMPSJBUg44sqaNuiz5FG3CW6rpKPCm",
+        "publicHex": "02fc104dbca2795f275f154bbc96c1e734a8bcc7cc433eb0fa04d7c7f9a433298a",
+        "private": "xprv9uGwJ6JNoPPj6AeegPu4udHby5WKtTkksTz4CJmLHRYZkgmKgJx45245B6vq3VxZaRH5DySyU6xnbzTYNSg8zVZaetAe6LmNhf4dxmetyLY",
+        "address": "1jaVaDfVPjwf6ZY7jrAtBuszqojh8RRDo",
+        "wif": "L4qW2qtsC8XXVdLkEMFdKEjPQhUd4ezFqjoKFG7dBkp4behmz88S"
+      },
+      {
+        "path": "m/45",
+        "public": "xpub68GHhbqGdkJUH71R7yhVxVHQaAr3iAPGGRUoVwiymKiB6J29H5yai5PjZVEt2KAmqoWEqqEoos9LBVBy9WQsPRBJjaq6EhL4T3fDWt1dLGo",
+        "publicHex": "020496b89581a3967215e634fb13b843812b4fc9b0e0d21b1c2d839c2f50d3b52c",
+        "private": "xprv9uGwJ6JNoNkB4cvx1xAVbMLg291ZJhfQuCZChZKNCzBCDVgzjYfLAH5FiFL68cto1Xqbp8rZSfzZfLa1985899iKpuRaYqgxCNBUbPHkRNv",
+        "address": "1KgnZPGzdjhfKh6eWcydzdrpecQj9mzS6f",
+        "wif": "L2KR9KrHvUgXHWmfePix3bNK6ZGypCNVCycYCvV3MkjDhAw29tT4"
+      },
+      {
+        "path": "m/5/0",
+        "public": "xpub6BJh1uCfzxBZcH5Mrk5zAbJCMoAqkfcteDCcRHQfjzJ4BKpDJuVweky5bw93vYzcbE92KytZnumtcJQcwe1ojE6J8gzUd1mfyizsKoZGeTG",
+        "publicHex": "02766ce81bdd8696dc5f36caab90c855e31bfd454a539ae854d61a774b74ce3d6b",
+        "private": "xprv9xKLcPfnAadGPnztkiYyoTMTomLMMCu3GzH1cu14Bem5JXV4mNBh6xebkguiCXbdCr26cgbJL6QsAyXdLuCqnFs672EF8UGZrUcRnC7bMh8",
+        "address": "1MraMGjeDzQohZV3KaY6q5nK4Papzmryu5",
+        "wif": "L4iq62aMkrsCZmeFoYT3ujUwjJ1mxVf2jubYcXjbonyjPX14J5JG"
+      },
+      {
+        "path": "m/5/0/10",
+        "public": "xpub6DLHtNcfT49nJe1iy5ae9cdwchQk5S8vRfpzxvpodVA6m82eEDZNnj28YhbwPCiivmrWFnaTaiMngnMtjWAt35vqSt4WaDPPdbyXtp7beZA",
+        "publicHex": "0218e95db9489d50bb35d0062a7097c3a480107ffbc27ed447aa5d7d665af2ff16",
+        "private": "xprv9zLwUs5mcgbV69wFs43dnUhD4faFfyR54SuQAYRC59d7tKhVggF8EvhehT8hMCGdUJogC7QXYY3awp34GPNM2gvqy7Yph6TcF9Wv9R9bpgH",
+        "address": "1BDCqrtyAycwYxqVkTx2152sdJvftrQBDM",
+        "wif": "KzXh3DcJrxZcYuDwkZve7g5zUwH3ixhixKrGm1G5drvJkPFB1kxA"
+      },
+      {
+        "path": "m/8/0/5094",
+        "public": "xpub6C5weP3r2xbXyrebhHjRUr6Zq7xahhE33FeWFq8hEZ1G2aEkdzDfn5JL3NmMLapbtLge1bwGbosobfi653RT8HtretrZgXKV1wEkqurXoDm",
+        "publicHex": "0302c57ea5b10994df081a65e76aace179ea6ffb2c949fb66783c6aa8fccc325b5",
+        "private": "xprv9y6bEsWxCb3EmNa8bGCR7i9qH686JEWBg2iuTSj5gDUH9muc6SuREGyrC6sQitQovNUm9B4tiJLAwsWFdAXHB5W4kWbumg2BT76uqZKLzTm",
+        "address": "15zAU1FwkWUKT8NnMrUDBYuiRuQHB6Cd2a",
+        "wif": "L25GKWsRwNKnEs4BahFJBKTniA3gxbbLPXk4GqLE27pvTyHQWoyw"
+      }
+    ]
+  }
+]
