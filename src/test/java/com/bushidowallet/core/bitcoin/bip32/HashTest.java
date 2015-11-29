@@ -1,6 +1,6 @@
-package com.bushidowallet.core.crypto.hash;
+package com.bushidowallet.core.bitcoin.bip32;
 
-import com.bushidowallet.core.crypto.TestResource;
+import com.bushidowallet.core.TestResource;
 import com.bushidowallet.core.crypto.util.ByteUtil;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.json.JSONArray;

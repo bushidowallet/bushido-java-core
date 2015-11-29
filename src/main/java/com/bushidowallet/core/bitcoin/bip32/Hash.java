@@ -1,4 +1,4 @@
-package com.bushidowallet.core.crypto.hash;
+package com.bushidowallet.core.bitcoin.bip32;
 
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 

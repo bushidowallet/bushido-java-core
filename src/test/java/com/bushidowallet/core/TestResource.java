@@ -1,4 +1,4 @@
-package com.bushidowallet.core.crypto;
+package com.bushidowallet.core;
 
 import org.json.JSONArray;
 import org.json.JSONException;

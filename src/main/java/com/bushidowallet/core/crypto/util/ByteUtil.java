@@ -1,6 +1,6 @@
 package com.bushidowallet.core.crypto.util;
 
-import com.bushidowallet.core.crypto.hash.Hash;
+import com.bushidowallet.core.bitcoin.bip32.Hash;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.math.BigInteger;
@@ -22,6 +22,13 @@ public class ByteUtil {
     public static byte[] fromHex(String hex)
     {
         return Hex.decode(hex);
+    }
+
+    public static byte[] reverseBytes(byte[] bytes) {
+        byte[] buf = new byte[bytes.length];
+        for (int i = 0; i < bytes.length; i++)
+            buf[i] = bytes[bytes.length - 1 - i];
+        return buf;
     }
 
     /**
