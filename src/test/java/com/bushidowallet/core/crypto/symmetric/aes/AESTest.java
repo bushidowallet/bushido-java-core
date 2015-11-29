@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.security.Security;
 
 /**
@@ -22,14 +21,13 @@ public class AESTest {
 
     @Test
     public void testEncrypt() throws Exception {
-        byte[] inputText = new byte[] {
-            0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
-            (byte)0x88, (byte)0x99, (byte)0xaa, (byte)0xbb,
-            (byte)0xcc, (byte)0xdd, (byte)0xee, (byte)0xff };
-        final AESKey key = AESKey.generate(192);
+
+        final String inputText = "This is my text to encrypt";
+        final AESKey key = AESKey.generate(256);
         final AES cipher = new AES();
-        final byte[] cipherText = cipher.encrypt(inputText, (SecretKeySpec) key.key);
-        final byte[] outputText = cipher.decrypt(cipherText, (SecretKeySpec) key.key);
-        Assert.assertEquals(ByteUtil.toHex(inputText), ByteUtil.toHex(outputText));
+        final String cipherText = cipher.encrypt(inputText, key.key);
+        final String outputText = cipher.decrypt(cipherText, key.key);
+        System.out.println("input " + inputText + " cipher text: " + cipherText + " key: " + ByteUtil.toHex(key.key.getEncoded()) + " output " + outputText);
+        Assert.assertEquals(inputText, outputText);
     }
 }

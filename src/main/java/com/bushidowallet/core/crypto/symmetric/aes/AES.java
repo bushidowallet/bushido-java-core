@@ -1,7 +1,8 @@
 package com.bushidowallet.core.crypto.symmetric.aes;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKey;
+import java.util.Base64;
 
 /**
  * Created by Jesion on 2015-11-28.
@@ -11,23 +12,27 @@ public class AES {
     private Cipher cipher;
 
     public AES() throws Exception {
-        this.cipher = Cipher.getInstance("AES/ECB/NoPadding", "BC");
+
+        this.cipher = Cipher.getInstance("AES", "BC");
     }
 
-    public byte[] encrypt(byte[] input, SecretKeySpec key) throws Exception {
-        byte[] cipherText = new byte[input.length];
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        int ctLength = cipher.update(input, 0, input.length, cipherText, 0);
-        ctLength += cipher.doFinal(cipherText, ctLength);
-        return cipherText;
+    public String encrypt(String plainText, SecretKey secretKey)
+            throws Exception {
+        byte[] plainTextByte = plainText.getBytes();
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] encryptedByte = cipher.doFinal(plainTextByte);
+        Base64.Encoder encoder = Base64.getEncoder();
+        String encryptedText = encoder.encodeToString(encryptedByte);
+        return encryptedText;
     }
 
-    public byte[] decrypt(byte[] cipherText, SecretKeySpec key) throws Exception {
-        int ctLength = cipherText.length;
-        byte[] output = new byte[ctLength];
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        int ptLength = cipher.update(cipherText, 0, ctLength, output, 0);
-        ptLength += cipher.doFinal(output, ptLength);
-        return output;
+    public String decrypt(String encryptedText, SecretKey secretKey)
+            throws Exception {
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] encryptedTextByte = decoder.decode(encryptedText);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedByte = cipher.doFinal(encryptedTextByte);
+        String decryptedText = new String(decryptedByte);
+        return decryptedText;
     }
 }
