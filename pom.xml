@@ -5,7 +5,7 @@
     <artifactId>bushido-core-lib</artifactId>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <description>Bushido Core Bitcoin and Cryptography lib</description>
     <url>http://www.bushidowallet.com</url>
     <properties>
@@ -104,8 +104,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
