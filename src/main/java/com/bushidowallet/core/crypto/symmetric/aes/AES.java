@@ -2,7 +2,8 @@ package com.bushidowallet.core.crypto.symmetric.aes;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
-import java.util.Base64;
+
+import org.springframework.security.crypto.codec.Base64;
 
 /**
  * Created by Jesion on 2015-11-28.
@@ -21,15 +22,13 @@ public class AES {
         byte[] plainTextByte = plainText.getBytes();
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] encryptedByte = cipher.doFinal(plainTextByte);
-        Base64.Encoder encoder = Base64.getEncoder();
-        String encryptedText = encoder.encodeToString(encryptedByte);
-        return encryptedText;
+        byte[] encryptedText = Base64.encode(encryptedByte);
+        return new String(encryptedText);
     }
 
     public String decrypt(String encryptedText, SecretKey secretKey)
             throws Exception {
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] encryptedTextByte = decoder.decode(encryptedText);
+        byte[] encryptedTextByte = Base64.decode(encryptedText.getBytes());
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] decryptedByte = cipher.doFinal(encryptedTextByte);
         String decryptedText = new String(decryptedByte);
