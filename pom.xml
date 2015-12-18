@@ -5,7 +5,7 @@
     <artifactId>bushido-core-lib</artifactId>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3</version>
     <description>Bushido Core Bitcoin and Cryptography lib</description>
     <url>http://www.bushidowallet.com</url>
     <properties>
