@@ -49,6 +49,10 @@ public class Address {
         } else if (flag == 0x0) {
             type = PAY_TO_PUBLIC_KEY_HASH;
             System.out.println("creating p2pkh address instance for " + address);
+        } else if(flag == 0x6F) {
+        	// add testnet address support
+            type = PAY_TO_PUBLIC_KEY_HASH;
+            System.out.println("creating p2pkh testnet address instance for " + address);
         }
         System.arraycopy(addressBytes, 1, hash, 0, addressBytes.length - 1);
         this.hash = hash;
