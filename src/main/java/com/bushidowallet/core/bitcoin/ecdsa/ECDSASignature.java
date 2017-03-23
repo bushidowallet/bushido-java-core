@@ -1,8 +1,13 @@
 package com.bushidowallet.core.bitcoin.ecdsa;
 
-import com.bushidowallet.core.bitcoin.util.ByteWriter;
-
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+
+import org.bouncycastle.asn1.DERInteger;
+import org.bouncycastle.asn1.DERSequenceGenerator;
+
+import com.bushidowallet.core.bitcoin.util.ByteWriter;
 
 /**
  * Created by Jesion on 2015-04-11.
@@ -66,9 +71,28 @@ public class ECDSASignature {
         return writer.toBytes();
     }
 
-    //DER signature format: [30] [total len] [02] [len R] [R] [02] [len S] [S]
+    // DER signature format: [30] [total len] [02] [len R] [R] [02] [len S] [S]
+    // BUG FIX
+    // data is DER format,just use DERSequenceGenerator to handle it.
     public byte[] toDER() {
-        return toBytes();
+        //return toBytes();
+        return toDER(r, s);
+    }
+    
+    private static byte[] toDER(BigInteger r, BigInteger s) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(72);
+        DERSequenceGenerator seq = null;
+        byte[] res = new byte[0];
+        try {
+            seq = new DERSequenceGenerator(bos);
+            seq.addObject(new DERInteger(r));
+            seq.addObject(new DERInteger(s));
+            seq.close();
+            res = bos.toByteArray();
+            return res;
+        } catch (IOException e) {
+        }
+        return null;
     }
 }
 
