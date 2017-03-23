@@ -84,6 +84,14 @@ public class MultiSigScriptHashInput extends Input {
     }
 
     public void addSignature(Transaction tx, TransactionSignature signature) throws Exception {
+    	
+    	
+    	/** do NOT sign by liwl on 20161201 */
+    	if(tx != null){
+    		addSignatureByOne(tx, signature);
+    		return;
+    	}
+    	
         if (isFullySigned() == false) {
             if (this.publicKeyIndex.get(ByteUtil.toHex(signature.publicKey)) != null) {
                 if (isValidSignature(tx, signature)) {
@@ -104,6 +112,35 @@ public class MultiSigScriptHashInput extends Input {
         }
     }
 
+    /**
+     * add by liwl on 20161201
+     * add signature by one person.
+     * Different people in different machine.
+     * 
+     * @param tx
+     * @param signature
+     * @throws Exception
+     */
+    public void addSignatureByOne(Transaction tx, TransactionSignature signature) throws Exception {
+        if (isFullySigned() == false) {
+            if (this.publicKeyIndex.get(ByteUtil.toHex(signature.publicKey)) != null) {
+                if (isValidSignature(tx, signature)) {
+                    if (signatures == null) {
+                        signatures = new ArrayList<TransactionSignature>();
+                    }
+                    signatures.add(signature);
+                    updateScript();
+                } else {
+                    throw new Exception("Attempting to add an invalid signature");
+                }
+            } else {
+                throw new Exception("Signature has no matching public key");
+            }
+        } else {
+            throw new Exception("All needed signatures have already been added");
+        }
+    }
+    
     private void updateScript() throws Exception {
         this.script = Script.buildP2SHMultisigIn(publicKeys,
             treshold,
