@@ -70,16 +70,50 @@ public class Transaction {
         }
     }
 
-    public void sign(ECKey key, int sigType) throws Exception {
-        if (hasAllUtxoInfo()) {
-            List<TransactionSignature> signatures = getSignatures(key, sigType);
-            for (int j = 0; j < signatures.size(); j++) {
-                applySignature(signatures.get(j));
-            }
-        } else {
-            throw new Exception("Inputs not complete");
-        }
-    }
+	public void sign(ECKey key, int sigType) throws Exception {
+		if (hasAllUtxoInfo()) {
+			List<TransactionSignature> signatures = getSignatures(key, sigType);
+			for (int j = 0; j < signatures.size(); j++) {
+				applySignature(signatures.get(j));
+			}
+		} else {
+			throw new Exception("Inputs not complete");
+		}
+	}
+
+	/**
+	 * add by Liwl
+	 * muilt sign by one person.
+	 * 
+	 * @param key
+	 * @param sigType
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TransactionSignature> signByOne(ECKey key, int sigType) throws Exception {
+		if (hasAllUtxoInfo()) {
+			return getSignatures(key, sigType);
+		} else {
+			throw new Exception("Inputs not complete");
+		}
+	}
+
+	/**
+	 * add by Liwl
+	 * appley signature by one person.
+	 * 
+	 * @param signatures
+	 * @throws Exception
+	 */
+	public void applySignatureByOne(List<TransactionSignature> signatures) throws Exception {
+		if (hasAllUtxoInfo()) {
+			for (int j = 0; j < signatures.size(); j++) {
+				applySignature(signatures.get(j));
+			}
+		} else {
+			throw new Exception("Inputs not complete");
+		}
+	}
 
     private List<TransactionSignature> getSignatures(ECKey key, int sigType) throws Exception {
         List<TransactionSignature> results = new ArrayList<TransactionSignature>();
@@ -196,16 +230,21 @@ public class Transaction {
         return fee == -1 ? estimateFee() : fee;
     }
 
-    public long estimateFee() throws Exception {
-        long available = getUnspentValue();
-        long size = estimateSize();
-        BigDecimal feeBase = new BigDecimal(size).divide(new BigDecimal(FEE_PER_KB));
-        double fee = Math.ceil(feeBase.doubleValue());
-        if (available > fee) {
-            size += CHANGE_OUTPUT_MAX_SIZE;
-        }
-        return (long) Math.ceil(new BigDecimal(size).divide(new BigDecimal(1000)).doubleValue()) * FEE_PER_KB;
-    }
+	public long estimateFee() throws Exception {
+		long size = estimateSize();
+		return new BigDecimal(size).divide(new BigDecimal(1024), 10, BigDecimal.ROUND_HALF_DOWN)
+				.multiply(new BigDecimal(FEE_PER_KB)).longValue();
+
+		/*
+		 * long available = getUnspentValue(); long size = estimateSize();
+		 * BigDecimal feeBase = new BigDecimal(size).divide(new
+		 * BigDecimal(FEE_PER_KB)); double fee =
+		 * Math.ceil(feeBase.doubleValue()); if (available > fee) { size +=
+		 * CHANGE_OUTPUT_MAX_SIZE; } return (long) Math.ceil(new
+		 * BigDecimal(size).divide(new BigDecimal(1000)).doubleValue() *
+		 * FEE_PER_KB);
+		 */
+	}
 
     public int estimateSize() throws Exception {
         int estimatedSize = MAXIMUM_EXTRA_SIZE;

@@ -87,12 +87,13 @@ public class Script {
         }
         final Script script = new Script();
         script.add(new Chunk(Opcode.smallInt(treshold)));
-        Collections.sort(publicKeys, new Comparator<ECKey>() {
+        // edit by ligl,do not sort pubkeys
+        /*Collections.sort(publicKeys, new Comparator<ECKey>() {
             @Override
             public int compare(ECKey o1, ECKey o2) {
                 return o1.getPublicHex().compareTo(o2.getPublicHex());
             }
-        });
+        });*/
         for (int i = 0; i < publicKeys.size(); i++) {
             script.addChunk(publicKeys.get(i).getPublic());
         }
@@ -193,7 +194,8 @@ public class Script {
             script.addChunk(signatures.get(i));
         }
         if (cachedMultisig != null) {
-            script.add(cachedMultisig);
+            //script.add(cachedMultisig);
+            script.addChunk(cachedMultisig.getBytes());
         } else {
             //TODO: test this
             script.add(Script.buildMultisigOut(publicKeys, treshold));
