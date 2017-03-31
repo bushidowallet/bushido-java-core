@@ -1,18 +1,25 @@
 package com.bushidowallet.core.bitcoin.tx;
 
-import com.bushidowallet.core.bitcoin.Address;
-import com.bushidowallet.core.bitcoin.bip32.ECKey;
-import com.bushidowallet.core.bitcoin.bip32.Hash;
-import com.bushidowallet.core.bitcoin.script.Script;
-import com.bushidowallet.core.crypto.util.ByteUtil;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.spec.ECGenParameterSpec;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.security.Security;
-import java.util.ArrayList;
-import java.util.List;
+import com.bushidowallet.core.bitcoin.Address;
+import com.bushidowallet.core.bitcoin.bip32.ECKey;
+import com.bushidowallet.core.bitcoin.bip32.Hash;
+import com.bushidowallet.core.bitcoin.script.Script;
+import com.bushidowallet.core.crypto.util.ByteUtil;
 
 /**
  * Created by Jesion on 2015-03-31.
@@ -190,5 +197,94 @@ public class TransactionTest {
         //createad from a Tx, a hash which is used as a message to be signed
         //this hash is an input to ECDSA sign(), see ECDSATest.java
         Assert.assertEquals("a9bc004bc083427ca43074b291d512770326766353bb8dff6b0fb954a985d9e8", resultHex);
+    }
+    
+    private static final String formatStringAdd0(String str, int strLength) {
+        while(str.length() < strLength) {
+            str = "0" + str;
+        }
+        return str;
+    }
+    
+    // generate an ECDsA key
+    private static ECKey generateKey() {
+        try {
+            //LogUtil.i("begin generate ecc key...");
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDsA", new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256k1");
+            keyGen.initialize(ecSpec, new SecureRandom());
+            KeyPair generateKeyPair = keyGen.generateKeyPair();
+            
+            BCECPrivateKey private1 = (BCECPrivateKey) generateKeyPair.getPrivate();
+            BCECPublicKey public1 = (BCECPublicKey) generateKeyPair.getPublic();
+            String S = private1.getS().toString(16);
+            String X = public1.engineGetQ().getAffineXCoord().toBigInteger().toString(16);
+            String Y = public1.engineGetQ().getAffineYCoord().toBigInteger().toString(16);
+            // format string to 64 length with zero in head
+            S = formatStringAdd0(S, 64);
+            X = formatStringAdd0(X, 64);
+            Y = formatStringAdd0(Y, 64);
+            
+            // public key string
+            String publicKeyStr = "04" + X + Y;
+            
+            // set public key begin with 04
+            ECKey ecKey = new ECKey(private1.getS().toByteArray(), false, true);
+            return ecKey;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    // test for multiple sign transaction
+    // 2 of 3,people A,B,C
+    // address 38bPsA6ZXfRuxFD7efVXTkQd69422uzD4B -> 1EKXAAiJDntbEK3WSVW3vTcwYJ5ciJ5kSL
+    // address info ref: https://blockchain.info/address/38bPsA6ZXfRuxFD7efVXTkQd69422uzD4B
+    // public key list and private key list shows below
+    // is api support multiple sign tx for B&C?
+    @Test
+    public void testMutilSigTx() throws Exception {
+    	ECKey keyOfA = generateKey();
+    	ECKey keyOfB = generateKey();
+    	ECKey keyOfC = generateKey();
+    	
+    	System.out.println("public key of A: " + keyOfA.getPublicHex());
+    	System.out.println("public key of B: " + keyOfB.getPublicHex());
+    	System.out.println("public key of C: " + keyOfC.getPublicHex());
+    	System.out.println("private key of A: " + ByteUtil.toHex(keyOfA.getPrivate()));
+    	System.out.println("private key of B: " + ByteUtil.toHex(keyOfB.getPrivate()));
+    	System.out.println("private key of C: " + ByteUtil.toHex(keyOfC.getPrivate()));
+    	
+    	List<ECKey> publicKeyList = new ArrayList<ECKey>(3);
+    	// public key of A
+    	publicKeyList.add(keyOfA);
+    	// public key of B
+    	publicKeyList.add(keyOfB);
+    	// public key of C
+    	publicKeyList.add(keyOfC);
+    	
+    	Transaction tx = new Transaction();
+    	UTXODescriptor utxoDescriptor = new UTXODescriptor();
+    	utxoDescriptor.script = Script.buildScriptHashOut(Script.buildMultisigOut(publicKeyList, 2)).toString();
+    	utxoDescriptor.outputIndex = 0;
+        utxoDescriptor.txId = "ac89b280cc21854b82b4cc111a0e6c0d10315117b6001e3f4f3af3d2f7b2fd53";
+        utxoDescriptor.satoshis = (long) 2304;
+        
+        List<UTXODescriptor> utxoDescriptors = new ArrayList<UTXODescriptor>(1);
+        utxoDescriptors.add(utxoDescriptor);
+        tx.from(utxoDescriptors, publicKeyList, 2);
+        
+        tx.to("1EKXAAiJDntbEK3WSVW3vTcwYJ5ciJ5kSL", 1000);
+        
+        // now we begin sign tx
+        List<ECKey> privateKeyList = new ArrayList<ECKey>(2);
+        // add private key of B and C
+        privateKeyList.add(keyOfB);
+        privateKeyList.add(keyOfC);
+        // it will occur an Exception
+        // java.lang.IndexOutOfBoundsException: Index: 1, Size: 0
+        // bug fix code in com.bushidowallet.core.bitcoin.tx.input.MultiSigScriptHashInput.addSignatureByOne
+        tx.sign(privateKeyList);
     }
 }
