@@ -21,6 +21,7 @@ public class MultiSigScriptHashInput extends Input {
 
     public int treshold;
 
+    // in order to map a transaction signature to its public key's index
     public Map<Integer, TransactionSignature> signatures;
 
     public Script redeemScript;
