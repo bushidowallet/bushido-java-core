@@ -170,5 +170,9 @@ public class MultiSigScriptHashInputTest {
         privateKeyList.add(keyOfC);
 
         tx.sign(privateKeyList);
+
+        boolean fullySigned = tx.isFullySigned();
+
+        Assert.assertTrue(fullySigned);
     }
 }
