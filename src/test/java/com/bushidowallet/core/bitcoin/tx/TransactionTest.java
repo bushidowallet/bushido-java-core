@@ -23,8 +23,7 @@ public class TransactionTest {
     private static String TX1ID = "779a3e5b3c2c452c85333d8521f804c1a52800e60f4b7c3bbe36f4bab350b72c";
 
     @BeforeClass
-    public static void init ()
-    {
+    public static void init() {
         Security.addProvider(new BouncyCastleProvider());
     }
 

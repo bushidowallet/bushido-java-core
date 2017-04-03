@@ -21,7 +21,8 @@ public class MultiSigScriptHashInput extends Input {
 
     public int treshold;
 
-    public List<TransactionSignature> signatures;
+    // in order to map a transaction signature to its public key's index
+    public Map<Integer, TransactionSignature> signatures;
 
     public Script redeemScript;
 
@@ -31,7 +32,7 @@ public class MultiSigScriptHashInput extends Input {
                                    Script script,
                                    List<ECKey> publicKeys,
                                    int treshold,
-                                   List<TransactionSignature> signatures) throws Exception {
+                                   Map<Integer, TransactionSignature> signatures) throws Exception {
         this.output = output;
         this.prevTxId = prevTxId;
         this.outputIndex = outputIndex;
@@ -46,7 +47,7 @@ public class MultiSigScriptHashInput extends Input {
         if (signatures != null) {
             this.signatures = signatures;
         } else {
-            this.signatures = new ArrayList<TransactionSignature>();
+            this.signatures = new HashMap<Integer, TransactionSignature>();
         }
         if (Script.buildScriptHashOut(this.redeemScript).equals(output.script) == false) {
             throw new Exception("Provided public keys don't hash to the provided output");
@@ -88,10 +89,7 @@ public class MultiSigScriptHashInput extends Input {
             if (this.publicKeyIndex.get(ByteUtil.toHex(signature.publicKey)) != null) {
                 if (isValidSignature(tx, signature)) {
                     int index = this.publicKeyIndex.get(ByteUtil.toHex(signature.publicKey));
-                    if (signatures == null) {
-                        signatures = new ArrayList<TransactionSignature>();
-                    }
-                    signatures.add(index, signature);
+                    signatures.put(index, signature);
                     updateScript();
                 } else {
                     throw new Exception("Attempting to add an invalid signature");
@@ -114,8 +112,10 @@ public class MultiSigScriptHashInput extends Input {
 
     private List<byte[]> createSignatures() {
         final List<byte[]> sigBytes = new ArrayList<byte[]>();
-        for (int i = 0; i < signatures.size(); i++) {
-            TransactionSignature txSig = signatures.get(i);
+        Iterator it = this.signatures.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            TransactionSignature txSig = (TransactionSignature) pair.getValue();
             byte[] sigDER = txSig.signature.toDER();
             int sigType = txSig.sigType;
             byte[] sigTypeBytes = new byte[1];
@@ -130,7 +130,7 @@ public class MultiSigScriptHashInput extends Input {
 
     @Override
     public void clearSignatures() throws Exception {
-        this.signatures = new ArrayList<TransactionSignature>();
+        this.signatures.clear();
         updateScript();
     }
 
