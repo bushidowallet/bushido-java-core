@@ -117,6 +117,10 @@ public class ExtendedKey {
         throw new Exception("This is a public key only. Can't serialize a private key");
     }
 
+    public ECKey getECKey() {
+        return this.ecKey;
+    }
+
     /**
      * Takes a serialized key (public or private) and constructs an instance of ExtendedKey
      *

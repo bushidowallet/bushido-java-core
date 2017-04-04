@@ -1,7 +1,7 @@
 package com.bushidowallet.core.bitcoin.tx.input;
 
 import com.bushidowallet.core.bitcoin.Address;
-import com.bushidowallet.core.bitcoin.bip32.ECKey;
+import com.bushidowallet.core.bitcoin.bip32.*;
 import com.bushidowallet.core.bitcoin.script.Script;
 import com.bushidowallet.core.bitcoin.tx.Transaction;
 import com.bushidowallet.core.bitcoin.tx.TransactionSignature;
@@ -26,6 +26,8 @@ import java.util.List;
  * Created by Jesion on 2015-04-14.
  */
 public class MultiSigScriptHashInputTest {
+
+    private boolean compressedKeys = true;
 
     @BeforeClass
     public static void init ()
@@ -174,5 +176,98 @@ public class MultiSigScriptHashInputTest {
         boolean fullySigned = tx.isFullySigned();
 
         Assert.assertTrue(fullySigned);
+    }
+
+    //7 - of - 9 multi signature test
+    @Test
+    public void testSign7of9() throws Exception {
+
+        //first lets crate 9 key pairs with different entropies to simulate they belong to different wallets/users
+        String entropy1 = "By the end of the 12th century, samurai became almost entirely synonymous with bushi";
+        String entropy2 = "Some clans were originally formed by farmers who had taken up arms to protect themselves from the Imperial magistrates";
+        String entropy3 = "Over time, powerful samurai clans became warrior nobility";
+        String entropy4 = "During pre-World War II and World War II Showa Japan, bushido was pressed into use for militarism";
+        String entropy5 = "Prisoners of war denied being mistreated and declared that they were being well-treated by virtue of bushido generosity";
+        String entropy6 = "Bushido varied dramatically over time, and across the geographic and socio-economic backgrounds of the samurai";
+        String entropy7 = "Other pundits pontificating on the warrior philosophy covered methods of raising children";
+        String entropy8 = "When warriors say that they will perform an action, it is as good as done";
+        String entropy9 = "Hiding like a turtle in a shell is not living at all";
+
+        List<ExtendedKey> keyPairs = new ArrayList<ExtendedKey>();
+        keyPairs.add(derive(getRootKey(entropy1)));
+        keyPairs.add(derive(getRootKey(entropy2)));
+        keyPairs.add(derive(getRootKey(entropy3)));
+        keyPairs.add(derive(getRootKey(entropy4)));
+        keyPairs.add(derive(getRootKey(entropy5)));
+        keyPairs.add(derive(getRootKey(entropy6)));
+        keyPairs.add(derive(getRootKey(entropy7)));
+        keyPairs.add(derive(getRootKey(entropy8)));
+        keyPairs.add(derive(getRootKey(entropy9)));
+
+        //splitting up public keys from their private brothers
+        List<ECKey> pubKeys = new ArrayList<ECKey>();
+
+        for (int i = 0; i < keyPairs.size(); i++) {
+            pubKeys.add(new ECKey(keyPairs.get(i).getPublic(), compressedKeys, false));
+        }
+
+        //building up 7 of 9 multisig output script
+        int treshold = 7;
+        Script multisigOut = Script.buildMultisigOut(pubKeys, treshold);
+
+        //building 7 of 9 multisignature address
+        Address address = new Address(multisigOut);
+
+        String addr = address.toString();
+
+        Assert.assertEquals("34JX2eaeZrbroLe9LsqJd1mewn1k1PuKSX", addr);
+
+        //construct UTXO that builds up script from multi-signature address
+        List<UTXODescriptor> utxos = new ArrayList<UTXODescriptor>();
+        UTXODescriptor utxo = new UTXODescriptor();
+        utxo.script = Script.fromAddress(address).toString();
+        utxo.outputIndex = 0;
+        utxo.satoshis = 1000000;
+        utxo.txId = "66e64ef8a3b384164b78453fa8c8194de9a473ba14f89485a0e433699daec140";
+        utxos.add(utxo);
+
+        //construct a transaction that sends 900000 Satoshi from a multi-signature address to a pay to public key hash address
+        Transaction tx = new Transaction();
+        tx.from(utxos, pubKeys, 7);
+        tx.to("1EKXAAiJDntbEK3WSVW3vTcwYJ5ciJ5kSL", 900000);
+
+        //take 7 private keys and insert them to a list
+        List<ECKey> privateKeys = new ArrayList<ECKey>(7);
+        for (int i = 0; i < keyPairs.size() - 2; i++) {
+            privateKeys.add(keyPairs.get(i).getECKey());
+        }
+
+        Assert.assertEquals(7, privateKeys.size());
+
+        //now lets sign a transaction, once key index reaches 6, tx should be fully signed
+        for (int j = 0; j < privateKeys.size(); j++) {
+
+            System.out.println("Signing tx with private key index " + j);
+            tx.sign( privateKeys.get(j), TransactionSignature.SIGHASH_ALL);
+
+            if (j < privateKeys.size() - 1) {
+                System.out.println("Not fully signed yet at key index: " + j);
+                Assert.assertFalse(tx.isFullySigned());
+            } else if (j == privateKeys.size() - 1) {
+                System.out.println("Fully signed yet at key index: " + j);
+                Assert.assertTrue(tx.isFullySigned());
+            }
+        }
+    }
+
+    private ExtendedKey getRootKey(String entropy) throws Exception {
+
+        byte[] passphraseHash = new Hash(entropy, 50000, "SHA-256").hash();
+        byte[] keyHash = new Hash(passphraseHash).getHmacSHA512(Seed.BITCOIN_SEED);
+        return new ExtendedKey(keyHash, compressedKeys);
+    }
+
+    private ExtendedKey derive(ExtendedKey root) throws Exception {
+        return new Derivation(root).accountKey(0, 59, 593305);
     }
 }
