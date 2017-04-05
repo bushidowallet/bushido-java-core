@@ -251,10 +251,10 @@ public class MultiSigScriptHashInputTest {
             tx.sign( privateKeys.get(j), TransactionSignature.SIGHASH_ALL);
 
             if (j < privateKeys.size() - 1) {
-                System.out.println("Not fully signed yet at key index: " + j);
+                System.out.println("Tx not fully signed yet at key index: " + j);
                 Assert.assertFalse(tx.isFullySigned());
             } else if (j == privateKeys.size() - 1) {
-                System.out.println("Fully signed yet at key index: " + j);
+                System.out.println("Tx fully signed at key index: " + j);
                 Assert.assertTrue(tx.isFullySigned());
             }
         }
